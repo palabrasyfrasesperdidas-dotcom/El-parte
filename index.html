@@ -319,17 +319,6 @@
             object-fit: contain;
         }
 
-        .clothing-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            pointer-events: none;
-            display: none;
-        }
-
         .clothes-grid {
             display: flex;
             flex-wrap: wrap;
@@ -353,12 +342,6 @@
             box-shadow: 0 4px 0 #801010;
         }
 
-        .tile-clothes-card.selected {
-            border-color: #2e7d32;
-            background-color: #e8f5e9;
-            box-shadow: 0 4px 0 #1b5e20;
-        }
-
         .tile-clothes-card img {
             width: 100%;
             height: 65%;
@@ -370,6 +353,31 @@
             font-size: 0.9rem;
             font-weight: bold;
             text-align: center;
+        }
+
+        /* RETO 6: TAREAS DEL HOGAR */
+        .task-card-display {
+            background: rgba(255, 255, 255, 0.1);
+            border: 4px dashed var(--chalk-yellow);
+            border-radius: 16px;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+        }
+
+        .task-title {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            color: var(--chalk-yellow);
+        }
+
+        .task-icon {
+            font-size: 4rem;
         }
 
         /* BANCO DE OPCIONES INFERIORES */
@@ -415,8 +423,8 @@
         }
 
         .tile-image-card {
-            width: clamp(130px, 22vw, 190px);
-            height: clamp(130px, 22vw, 190px);
+            width: clamp(120px, 20vw, 170px);
+            height: clamp(120px, 20vw, 170px);
             background-color: #ffffff;
             border: 4px solid #333333;
             border-radius: 16px;
@@ -431,14 +439,14 @@
 
         .tile-image-card img {
             width: 100%;
-            height: 70%;
+            height: 65%;
             object-fit: cover;
             border-radius: 10px;
         }
 
         .tile-image-card span {
             color: #111111;
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-size: clamp(1rem, 2.2vw, 1.4rem);
             font-weight: bold;
             margin-top: 4px;
         }
@@ -520,7 +528,7 @@
         <div id="screen-challenge-1" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">1. ¿Qué fecha es hoy?</div>
-                <div class="progress-badge">Reto 1 de 5</div>
+                <div class="progress-badge">Reto 1 de 6</div>
             </div>
 
             <div class="workspace">
@@ -574,7 +582,7 @@
         <div id="screen-challenge-2" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">2. ¿Qué hora es en el reloj?</div>
-                <div class="progress-badge">Reto 2 de 5</div>
+                <div class="progress-badge">Reto 2 de 6</div>
             </div>
 
             <div class="workspace">
@@ -619,7 +627,7 @@
         <div id="screen-challenge-3" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">3. ¿En qué estación del año estamos?</div>
-                <div class="progress-badge">Reto 3 de 5</div>
+                <div class="progress-badge">Reto 3 de 6</div>
             </div>
 
             <div class="workspace">
@@ -649,7 +657,7 @@
         <div id="screen-challenge-4" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">4. ¿Qué tiempo hace hoy en Zaragoza?</div>
-                <div class="progress-badge">Reto 4 de 5</div>
+                <div class="progress-badge">Reto 4 de 6</div>
             </div>
 
             <div class="workspace">
@@ -683,13 +691,12 @@
         <div id="screen-challenge-5" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">5. ¿Qué ropa elegimos para hoy?</div>
-                <div class="progress-badge">Reto 5 de 5</div>
+                <div class="progress-badge">Reto 5 de 6</div>
             </div>
 
             <div class="workspace">
                 <div class="dressing-stage">
                     <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png" alt="Anciana en ropa interior" class="character-base">
-                    <!-- Capas simbólicas de prendas elegidas -->
                     <div id="layer-text-display" style="position: absolute; bottom: 10px; background: rgba(0,0,0,0.7); padding: 5px 15px; border-radius: 20px; font-weight: bold; color: var(--chalk-yellow);">
                         Sin vestir
                     </div>
@@ -704,33 +711,70 @@
             <div class="bottom-bank">
                 <span class="bank-instruction">Toca la ropa que debe ponerse en función del tiempo:</span>
                 <div class="clothes-grid">
-                    <button class="tile-clothes-card" id="btn-pantalones" onclick="toggleClothing('Pantalones')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Pantalones')">
                         <img src="https://cdn-icons-png.flaticon.com/512/3893/3893070.png" alt="Pantalones">
                         <span>Pantalones</span>
                     </button>
-                    <button class="tile-clothes-card" id="btn-falda" onclick="toggleClothing('Falda')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Falda')">
                         <img src="https://cdn-icons-png.flaticon.com/512/3893/3893084.png" alt="Falda">
                         <span>Falda</span>
                     </button>
-                    <button class="tile-clothes-card" id="btn-c-corta" onclick="toggleClothing('Camisa Manga Corta')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Manga Corta')">
                         <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="Manga Corta">
                         <span>Manga Corta</span>
                     </button>
-                    <button class="tile-clothes-card" id="btn-c-larga" onclick="toggleClothing('Camisa Manga Larga')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Manga Larga')">
                         <img src="https://cdn-icons-png.flaticon.com/512/2503/2503522.png" alt="Manga Larga">
                         <span>Manga Larga</span>
                     </button>
-                    <button class="tile-clothes-card" id="btn-jersey" onclick="toggleClothing('Jersey')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Jersey')">
                         <img src="https://cdn-icons-png.flaticon.com/512/3893/3893208.png" alt="Jersey">
                         <span>Jersey</span>
                     </button>
-                    <button class="tile-clothes-card" id="btn-chaqueta" onclick="toggleClothing('Chaqueta')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Chaqueta')">
                         <img src="https://cdn-icons-png.flaticon.com/512/3893/3893056.png" alt="Chaqueta">
                         <span>Chaqueta</span>
                     </button>
-                    <button class="tile-clothes-card" id="btn-abrigo" onclick="toggleClothing('Abrigo')">
+                    <button class="tile-clothes-card" onclick="toggleClothing('Abrigo')">
                         <img src="https://cdn-icons-png.flaticon.com/512/3893/3893036.png" alt="Abrigo">
                         <span>Abrigo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA RETO 6: TAREAS DEL HOGAR Y ESTANCIAS -->
+        <div id="screen-challenge-6" class="screen">
+            <div class="challenge-header">
+                <div class="challenge-title">6. ¿En qué lugar de la casa se realiza esta tarea?</div>
+                <div class="progress-badge" id="task-progress-badge">Tarea 1 de 10</div>
+            </div>
+
+            <div class="workspace">
+                <div class="task-card-display">
+                    <div id="task-icon" class="task-icon">🪟</div>
+                    <div id="task-title" class="task-title">Hacer la cama</div>
+                </div>
+            </div>
+
+            <div class="bottom-bank">
+                <span class="bank-instruction">Toca la ficha de la estancia correspondiente:</span>
+                <div class="tiles-grid">
+                    <button class="tile-image-card" onclick="selectRoom('Dormitorio')">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&w=400&q=80" alt="Dormitorio">
+                        <span>Dormitorio</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectRoom('Cocina')">
+                        <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=400&q=80" alt="Cocina">
+                        <span>Cocina</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectRoom('Baño')">
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80" alt="Baño">
+                        <span>Baño</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectRoom('Salón')">
+                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=400&q=80" alt="Salón">
+                        <span>Salón</span>
                     </button>
                 </div>
             </div>
@@ -754,9 +798,22 @@
         let selectedClockMinute = null;
         let zaragozaWeatherReal = 'Soleado'; 
         let nextStepCallback = null;
-        
-        // Ropa vestida
         let dressedItems = new Set();
+
+        // RETO 6: BANCO DE 10 TAREAS DEL HOGAR
+        const homeTasks = [
+            { name: "Hacer la cama", icon: "🛏️", room: "Dormitorio" },
+            { name: "Lavar los platos", icon: "🍽️", room: "Cocina" },
+            { name: "Ducharse o lavarse la cara", icon: "🚿", room: "Baño" },
+            { name: "Barrer o pasar la fregona", icon: "🧹", room: "Salón" },
+            { name: "Guardar la ropa en el armario", icon: "👔", room: "Dormitorio" },
+            { name: "Cocinar la comida", icon: "🍳", room: "Cocina" },
+            { name: "Limpiar el espejo", icon: "🪞", room: "Baño" },
+            { name: "Ver la televisión en el sofá", icon: "📺", room: "Salón" },
+            { name: "Poner la lavadora", icon: "🧺", room: "Baño" },
+            { name: "Tirar la basura", icon: "🗑️", room: "Cocina" }
+        ];
+        let currentTaskIndex = 0;
 
         window.onload = function() {
             setupNumberBank();
@@ -1066,7 +1123,7 @@
             if (weatherChoice === zaragozaWeatherReal || 
                (weatherChoice === 'Soleado' && zaragozaWeatherReal === 'Sol y Nubes') ||
                (weatherChoice === 'Sol y Nubes' && zaragozaWeatherReal === 'Soleado')) {
-                showFeedback(true, "¡Excelente Trabajo!", "¡Pasa al último reto para elegir la ropa de hoy!", () => {
+                showFeedback(true, "¡Excelente Trabajo!", "¡Pasa al reto de la ropa de hoy!", () => {
                     showScreen('screen-challenge-5');
                     speakText("Reto cinco: Elige la ropa adecuada para salir hoy.");
                 });
@@ -1103,10 +1160,44 @@
             if (dressedItems.size === 0) {
                 showFeedback(false, "Falta elegir la ropa", "Selecciona al menos una prenda para vestir a la anciana.");
             } else {
-                showFeedback(true, "¡Perfecto!", "¡Has completado correctamente todas las actividades diarias de 'El parte'!", () => {
-                    showScreen('screen-home');
-                    speakText("¡Enhorabuena! Has completado todas las actividades diarias con éxito.");
+                showFeedback(true, "¡Muy Bien!", "¡Ahora pasa al último reto de tareas domésticas!", () => {
+                    initHomeTasksChallenge();
+                    showScreen('screen-challenge-6');
+                    speakText("Reto seis: Identifica en qué lugar de la casa se hace cada tarea.");
                 });
+            }
+        }
+
+        /* RETO 6: TAREAS DEL HOGAR */
+        function initHomeTasksChallenge() {
+            currentTaskIndex = 0;
+            renderCurrentTask();
+        }
+
+        function renderCurrentTask() {
+            const task = homeTasks[currentTaskIndex];
+            document.getElementById('task-title').textContent = task.name;
+            document.getElementById('task-icon').textContent = task.icon;
+            document.getElementById('task-progress-badge').textContent = `Tarea ${currentTaskIndex + 1} de 10`;
+            speakText(`¿En qué lugar de la casa se realiza la tarea: ${task.name}?`);
+        }
+
+        function selectRoom(selectedRoom) {
+            const currentTask = homeTasks[currentTaskIndex];
+            if (selectedRoom === currentTask.room) {
+                currentTaskIndex++;
+                if (currentTaskIndex < homeTasks.length) {
+                    showFeedback(true, "¡Estancia Correcta!", `Exacto, ${currentTask.name.toLowerCase()} se hace en el/la ${currentTask.room}.`, () => {
+                        renderCurrentTask();
+                    });
+                } else {
+                    showFeedback(true, "¡FELICIDADES!", "¡Has completado con éxito todos los retos diarios de 'El parte'!", () => {
+                        showScreen('screen-home');
+                        speakText("¡Enhorabuena! Has completado con éxito todas las actividades del día.");
+                    });
+                }
+            } else {
+                showFeedback(false, "Casi, inténtalo de nuevo", `${currentTask.name} se realiza normalmente en otra estancia.`);
             }
         }
 
