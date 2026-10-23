@@ -98,7 +98,7 @@
 
         .hero-img {
             width: 100%;
-            max-height: 280px;
+            max-height: 260px;
             object-fit: cover;
             border-radius: 12px;
             border: 3px solid var(--chalk-white);
@@ -515,9 +515,10 @@
             <p class="subtitle">¡Bienvenido/a al tablero de actividades diarias!</p>
             
             <div class="hero-banner">
-                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d1e292c7?auto=format&fit=crop&w=800&q=80" 
-                     alt="Niña jugando con una cámara de juguete" 
-                     class="hero-img">
+                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" 
+                     alt="Actividades cotidianas y aprendizaje" 
+                     class="hero-img"
+                     onerror="this.src='https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80'">
                 <div class="motto-text">"Todos los días aprendemos"</div>
             </div>
 
@@ -800,7 +801,6 @@
         let nextStepCallback = null;
         let dressedItems = new Set();
 
-        // RETO 6: BANCO DE 10 TAREAS DEL HOGAR
         const homeTasks = [
             { name: "Hacer la cama", icon: "🛏️", room: "Dormitorio" },
             { name: "Lavar los platos", icon: "🍽️", room: "Cocina" },
