@@ -98,7 +98,7 @@
 
         .hero-img {
             width: 100%;
-            max-height: 260px;
+            max-height: 270px;
             object-fit: cover;
             border-radius: 12px;
             border: 3px solid var(--chalk-white);
@@ -301,21 +301,23 @@
         /* RETO 5: VESTIR A LA ANCIANA */
         .dressing-stage {
             position: relative;
-            width: clamp(220px, 40vw, 300px);
-            height: clamp(280px, 50vw, 360px);
-            background: rgba(255,255,255,0.1);
+            width: clamp(220px, 40vw, 290px);
+            height: clamp(260px, 45vw, 320px);
+            background: rgba(255,255,255,0.15);
             border: 4px solid var(--chalk-white);
             border-radius: 16px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             margin-bottom: 10px;
+            padding: 10px;
         }
 
         .character-base {
-            width: 80%;
-            height: 90%;
+            width: 75%;
+            height: 75%;
             object-fit: contain;
         }
 
@@ -328,8 +330,8 @@
         }
 
         .tile-clothes-card {
-            width: clamp(80px, 14vw, 110px);
-            height: clamp(80px, 14vw, 110px);
+            width: clamp(85px, 13vw, 115px);
+            height: clamp(85px, 13vw, 115px);
             background-color: #ffffff;
             border: 3px solid #b71c1c;
             border-radius: 12px;
@@ -515,10 +517,9 @@
             <p class="subtitle">¡Bienvenido/a al tablero de actividades diarias!</p>
             
             <div class="hero-banner">
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80" 
-                     alt="Actividades cotidianas y aprendizaje" 
-                     class="hero-img"
-                     onerror="this.src='https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80'">
+                <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" 
+                     alt="Niña feliz sonriendo" 
+                     class="hero-img">
                 <div class="motto-text">"Todos los días aprendemos"</div>
             </div>
 
@@ -643,7 +644,7 @@
                         <span>Verano</span>
                     </button>
                     <button class="tile-image-card" onclick="selectSeason('Otoño')">
-                        <img src="https://images.unsplash.com/photo-1507181179412-1e89099e8f92?auto=format&fit=crop&w=400&q=80" alt="Otoño">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Otoño (Hojas secas)" onerror="this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=400&q=80'">
                         <span>Otoño</span>
                     </button>
                     <button class="tile-image-card" onclick="selectSeason('Invierno')">
@@ -697,8 +698,8 @@
 
             <div class="workspace">
                 <div class="dressing-stage">
-                    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png" alt="Anciana en ropa interior" class="character-base">
-                    <div id="layer-text-display" style="position: absolute; bottom: 10px; background: rgba(0,0,0,0.7); padding: 5px 15px; border-radius: 20px; font-weight: bold; color: var(--chalk-yellow);">
+                    <img src="https://cdn-icons-png.flaticon.com/512/706/706830.png" alt="Anciana" class="character-base">
+                    <div id="layer-text-display" style="margin-top: 5px; background: rgba(0,0,0,0.7); padding: 4px 12px; border-radius: 15px; font-weight: bold; color: var(--chalk-yellow); font-size: 1.1rem;">
                         Sin vestir
                     </div>
                 </div>
@@ -713,11 +714,11 @@
                 <span class="bank-instruction">Toca la ropa que debe ponerse en función del tiempo:</span>
                 <div class="clothes-grid">
                     <button class="tile-clothes-card" onclick="toggleClothing('Pantalones')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893070.png" alt="Pantalones">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2290/2290514.png" alt="Pantalones">
                         <span>Pantalones</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Falda')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893084.png" alt="Falda">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1785/1785255.png" alt="Falda">
                         <span>Falda</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Manga Corta')">
@@ -729,15 +730,15 @@
                         <span>Manga Larga</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Jersey')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893208.png" alt="Jersey">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3050/3050239.png" alt="Jersey">
                         <span>Jersey</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Chaqueta')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893056.png" alt="Chaqueta">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2806/2806214.png" alt="Chaqueta">
                         <span>Chaqueta</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Abrigo')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893036.png" alt="Abrigo">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2806/2806225.png" alt="Abrigo">
                         <span>Abrigo</span>
                     </button>
                 </div>
