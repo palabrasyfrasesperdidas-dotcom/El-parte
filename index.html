@@ -40,7 +40,6 @@
             padding: 10px;
         }
 
-        /* Contenedor Principal Marco de Pizarra */
         .board-container {
             width: 100%;
             max-width: 1024px;
@@ -56,7 +55,6 @@
             justify-content: space-between;
         }
 
-        /* Pantallas */
         .screen {
             display: none;
             flex-direction: column;
@@ -70,7 +68,6 @@
             display: flex;
         }
 
-        /* Títulos */
         h1.title-main {
             font-family: 'Patrick Hand', cursive;
             font-size: clamp(2.8rem, 6vw, 4.5rem);
@@ -86,7 +83,6 @@
             color: var(--chalk-white);
         }
 
-        /* Lema e Imagen Promocional */
         .hero-banner {
             width: 100%;
             max-width: 650px;
@@ -117,7 +113,6 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        /* Botón Iniciar */
         .btn-start {
             background-color: var(--accent-orange);
             color: #ffffff;
@@ -138,11 +133,6 @@
             outline: none;
         }
 
-        .btn-start:active {
-            transform: scale(0.98);
-        }
-
-        /* Encabezado del Reto */
         .challenge-header {
             width: 100%;
             display: flex;
@@ -168,7 +158,6 @@
             border: 1px solid rgba(255,255,255,0.4);
         }
 
-        /* ÁREAS DE RETOS */
         .workspace {
             flex-grow: 1;
             display: flex;
@@ -219,7 +208,6 @@
             font-weight: bold;
             color: var(--chalk-yellow);
             cursor: pointer;
-            transition: border-color 0.2s, background 0.2s;
         }
 
         .slot.active-slot {
@@ -250,7 +238,7 @@
             border: 10px solid #d4a359;
             border-radius: 50%;
             position: relative;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6);
         }
 
         .clock-center-dot {
@@ -298,19 +286,8 @@
             transition: transform 0.4s cubic-bezier(0.4, 2.08, 0.55, 0.44);
         }
 
-        .hour-hand {
-            width: 8px;
-            height: 28%;
-            background-color: #d32f2f;
-            z-index: 5;
-        }
-
-        .minute-hand {
-            width: 5px;
-            height: 38%;
-            background-color: #1976d2;
-            z-index: 6;
-        }
+        .hour-hand { width: 8px; height: 28%; background-color: #d32f2f; z-index: 5; }
+        .minute-hand { width: 5px; height: 38%; background-color: #1976d2; z-index: 6; }
 
         .clock-status-box {
             font-size: 1.3rem;
@@ -319,6 +296,80 @@
             padding: 8px 20px;
             border-radius: 12px;
             border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* RETO 5: VESTIR A LA ANCIANA */
+        .dressing-stage {
+            position: relative;
+            width: clamp(220px, 40vw, 300px);
+            height: clamp(280px, 50vw, 360px);
+            background: rgba(255,255,255,0.1);
+            border: 4px solid var(--chalk-white);
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .character-base {
+            width: 80%;
+            height: 90%;
+            object-fit: contain;
+        }
+
+        .clothing-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            display: none;
+        }
+
+        .clothes-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 900px;
+        }
+
+        .tile-clothes-card {
+            width: clamp(80px, 14vw, 110px);
+            height: clamp(80px, 14vw, 110px);
+            background-color: #ffffff;
+            border: 3px solid #b71c1c;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #801010;
+        }
+
+        .tile-clothes-card.selected {
+            border-color: #2e7d32;
+            background-color: #e8f5e9;
+            box-shadow: 0 4px 0 #1b5e20;
+        }
+
+        .tile-clothes-card img {
+            width: 100%;
+            height: 65%;
+            object-fit: contain;
+        }
+
+        .tile-clothes-card span {
+            color: #111;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
         }
 
         /* BANCO DE OPCIONES INFERIORES */
@@ -361,18 +412,6 @@
             font-weight: 800;
             box-shadow: 0 5px 0 #801010, 0 8px 12px rgba(0,0,0,0.4);
             cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.1s;
-        }
-
-        .tile-card:hover, .tile-card:focus {
-            transform: translateY(-4px);
-            box-shadow: 0 9px 0 #801010, 0 12px 15px rgba(0,0,0,0.4);
-            outline: none;
-        }
-
-        .tile-card:active {
-            transform: translateY(2px);
-            box-shadow: 0 3px 0 #801010, 0 4px 6px rgba(0,0,0,0.4);
         }
 
         .tile-image-card {
@@ -387,14 +426,7 @@
             justify-content: space-between;
             padding: 8px;
             cursor: pointer;
-            box-shadow: 0 6px 0 #222222, 0 10px 15px rgba(0,0,0,0.5);
-            transition: transform 0.1s;
-        }
-
-        .tile-image-card:hover, .tile-image-card:focus {
-            transform: translateY(-4px);
-            outline: none;
-            border-color: var(--accent-orange);
+            box-shadow: 0 6px 0 #222222;
         }
 
         .tile-image-card img {
@@ -427,26 +459,14 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        .btn-clear {
-            background-color: #d32f2f;
-            color: white;
-        }
+        .btn-clear { background-color: #d32f2f; color: white; }
+        .btn-verify { background-color: var(--accent-green); color: white; font-size: 1.5rem; padding: 12px 35px; }
 
-        .btn-verify {
-            background-color: var(--accent-green);
-            color: white;
-            font-size: 1.5rem;
-            padding: 12px 35px;
-        }
-
-        /* MODAL DE RETROALIMENTACIÓN */
         .modal-overlay {
             display: none;
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background-color: rgba(0, 0, 0, 0.85);
             border-radius: 14px;
             z-index: 100;
@@ -455,9 +475,7 @@
             padding: 20px;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal-card {
             background-color: var(--bg-board);
@@ -467,44 +485,16 @@
             text-align: center;
             max-width: 500px;
             width: 100%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
         }
 
-        .modal-icon {
-            font-size: 4rem;
-        }
-
-        .modal-message {
-            font-family: 'Patrick Hand', cursive;
-            font-size: clamp(2rem, 5vw, 3rem);
-            color: var(--chalk-yellow);
-            line-height: 1.2;
-        }
-
-        .modal-subtext {
-            font-size: 1.3rem;
-            color: var(--chalk-white);
-        }
-
-        .btn-modal {
-            background-color: var(--accent-orange);
-            color: white;
-            font-size: 1.6rem;
-            font-weight: bold;
-            padding: 12px 30px;
-            border-radius: 40px;
-            border: 3px solid white;
-            cursor: pointer;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
-        }
-
-        :focus-visible {
-            outline: 4px solid #ffeb3b !important;
-        }
+        .modal-icon { font-size: 4rem; }
+        .modal-message { font-family: 'Patrick Hand', cursive; font-size: clamp(2rem, 5vw, 3rem); color: var(--chalk-yellow); }
+        .modal-subtext { font-size: 1.3rem; color: var(--chalk-white); }
+        .btn-modal { background-color: var(--accent-orange); color: white; font-size: 1.6rem; font-weight: bold; padding: 12px 30px; border-radius: 40px; border: 3px solid white; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -519,8 +509,7 @@
             <div class="hero-banner">
                 <img src="https://images.unsplash.com/photo-1581579438747-1dc8d1e292c7?auto=format&fit=crop&w=800&q=80" 
                      alt="Niña jugando con una cámara de juguete" 
-                     class="hero-img"
-                     onerror="this.src='https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80'">
+                     class="hero-img">
                 <div class="motto-text">"Todos los días aprendemos"</div>
             </div>
 
@@ -531,7 +520,7 @@
         <div id="screen-challenge-1" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">1. ¿Qué fecha es hoy?</div>
-                <div class="progress-badge">Reto 1 de 4</div>
+                <div class="progress-badge">Reto 1 de 5</div>
             </div>
 
             <div class="workspace">
@@ -585,7 +574,7 @@
         <div id="screen-challenge-2" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">2. ¿Qué hora es en el reloj?</div>
-                <div class="progress-badge">Reto 2 de 4</div>
+                <div class="progress-badge">Reto 2 de 5</div>
             </div>
 
             <div class="workspace">
@@ -630,26 +619,26 @@
         <div id="screen-challenge-3" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">3. ¿En qué estación del año estamos?</div>
-                <div class="progress-badge">Reto 3 de 4</div>
+                <div class="progress-badge">Reto 3 de 5</div>
             </div>
 
             <div class="workspace">
                 <p class="bank-instruction" style="margin-bottom: 20px;">Toca o selecciona la imagen correcta de la estación actual:</p>
                 <div class="tiles-grid" style="gap: 20px;">
                     <button class="tile-image-card" onclick="selectSeason('Primavera')">
-                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400&q=80" alt="Primavera con flores" onerror="this.src='https://images.unsplash.com/photo-1522748943961-423531b74519?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400&q=80" alt="Primavera">
                         <span>Primavera</span>
                     </button>
                     <button class="tile-image-card" onclick="selectSeason('Verano')">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Verano y playa" onerror="this.src='https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Verano">
                         <span>Verano</span>
                     </button>
                     <button class="tile-image-card" onclick="selectSeason('Otoño')">
-                        <img src="https://images.unsplash.com/photo-1507181179412-1e89099e8f92?auto=format&fit=crop&w=400&q=80" alt="Otoño con hojas secas" onerror="this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1507181179412-1e89099e8f92?auto=format&fit=crop&w=400&q=80" alt="Otoño">
                         <span>Otoño</span>
                     </button>
                     <button class="tile-image-card" onclick="selectSeason('Invierno')">
-                        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=400&q=80" alt="Invierno con nieve" onerror="this.src='https://images.unsplash.com/photo-1491002052546-bf38f186af56?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=400&q=80" alt="Invierno">
                         <span>Invierno</span>
                     </button>
                 </div>
@@ -660,31 +649,88 @@
         <div id="screen-challenge-4" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">4. ¿Qué tiempo hace hoy en Zaragoza?</div>
-                <div class="progress-badge">Reto 4 de 4</div>
+                <div class="progress-badge">Reto 4 de 5</div>
             </div>
 
             <div class="workspace">
                 <p class="bank-instruction" style="margin-bottom: 15px;">Observa el tiempo fuera y selecciona la opción correcta:</p>
                 <div class="tiles-grid" style="gap: 15px;">
                     <button class="tile-image-card" onclick="selectWeather('Soleado')">
-                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Cielo Soleado Despejado" onerror="this.src='https://images.unsplash.com/photo-1601297183305-6df142704ea2?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Soleado">
                         <span>Soleado</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Sol y Nubes')">
-                        <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=400&q=80" alt="Sol y Nubes" onerror="this.src='https://images.unsplash.com/photo-1509803874385-db7c23652552?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=400&q=80" alt="Sol y Nubes">
                         <span>Sol y Nubes</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Nublado')">
-                        <img src="https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=400&q=80" alt="Nublado" onerror="this.src='https://images.unsplash.com/photo-1513002749550-c59d786b8e6c?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=400&q=80" alt="Nublado">
                         <span>Nublado</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Lluvia')">
-                        <img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=400&q=80" alt="Gotas de lluvia sencillas" onerror="this.src='https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=400&q=80" alt="Lluvia">
                         <span>Lluvia</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Viento / Cierzo')">
-                        <img src="https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=400&q=80" alt="Viento y Cierzo mueva ramas" onerror="this.src='https://images.unsplash.com/photo-1505672678857-85e104f60064?auto=format&fit=crop&w=400&q=80'">
+                        <img src="https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=400&q=80" alt="Viento">
                         <span>Viento / Cierzo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA -->
+        <div id="screen-challenge-5" class="screen">
+            <div class="challenge-header">
+                <div class="challenge-title">5. ¿Qué ropa elegimos para hoy?</div>
+                <div class="progress-badge">Reto 5 de 5</div>
+            </div>
+
+            <div class="workspace">
+                <div class="dressing-stage">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png" alt="Anciana en ropa interior" class="character-base">
+                    <!-- Capas simbólicas de prendas elegidas -->
+                    <div id="layer-text-display" style="position: absolute; bottom: 10px; background: rgba(0,0,0,0.7); padding: 5px 15px; border-radius: 20px; font-weight: bold; color: var(--chalk-yellow);">
+                        Sin vestir
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn-action btn-clear" onclick="resetDressing()">Desvestir</button>
+                    <button class="btn-action btn-verify" onclick="verifyDressing()">Comprobar Ropa</button>
+                </div>
+            </div>
+
+            <div class="bottom-bank">
+                <span class="bank-instruction">Toca la ropa que debe ponerse en función del tiempo:</span>
+                <div class="clothes-grid">
+                    <button class="tile-clothes-card" id="btn-pantalones" onclick="toggleClothing('Pantalones')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893070.png" alt="Pantalones">
+                        <span>Pantalones</span>
+                    </button>
+                    <button class="tile-clothes-card" id="btn-falda" onclick="toggleClothing('Falda')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893084.png" alt="Falda">
+                        <span>Falda</span>
+                    </button>
+                    <button class="tile-clothes-card" id="btn-c-corta" onclick="toggleClothing('Camisa Manga Corta')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="Manga Corta">
+                        <span>Manga Corta</span>
+                    </button>
+                    <button class="tile-clothes-card" id="btn-c-larga" onclick="toggleClothing('Camisa Manga Larga')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2503/2503522.png" alt="Manga Larga">
+                        <span>Manga Larga</span>
+                    </button>
+                    <button class="tile-clothes-card" id="btn-jersey" onclick="toggleClothing('Jersey')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893208.png" alt="Jersey">
+                        <span>Jersey</span>
+                    </button>
+                    <button class="tile-clothes-card" id="btn-chaqueta" onclick="toggleClothing('Chaqueta')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893056.png" alt="Chaqueta">
+                        <span>Chaqueta</span>
+                    </button>
+                    <button class="tile-clothes-card" id="btn-abrigo" onclick="toggleClothing('Abrigo')">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3893/3893036.png" alt="Abrigo">
+                        <span>Abrigo</span>
                     </button>
                 </div>
             </div>
@@ -703,12 +749,14 @@
     </div>
 
     <script>
-        let currentChallenge = 1;
         let selectedSlotId = 'd1';
         let selectedClockHour = null;
         let selectedClockMinute = null;
         let zaragozaWeatherReal = 'Soleado'; 
         let nextStepCallback = null;
+        
+        // Ropa vestida
+        let dressedItems = new Set();
 
         window.onload = function() {
             setupNumberBank();
@@ -722,7 +770,6 @@
         }
 
         function startApp() {
-            currentChallenge = 1;
             showScreen('screen-challenge-1');
             selectSlot('d1');
             speakText("Reto uno: Selecciona los números para poner la fecha de hoy.");
@@ -865,7 +912,7 @@
             const realYear = now.getFullYear();
 
             if (userDay === realDay && userMonth === realMonth && userYear === realYear) {
-                showFeedback(true, "¡Excelente Trabajo!", `¡Has acertado! Hoy es ${realDay}/${realMonth}/${realYear}. ¡Muy bien orientado!`, () => {
+                showFeedback(true, "¡Excelente Trabajo!", `¡Has acertado! Hoy es ${realDay}/${realMonth}/${realYear}.`, () => {
                     initClockChallenge();
                     showScreen('screen-challenge-2');
                     speakText("Reto dos: Coloca las agujas del reloj en la hora actual.");
@@ -1019,12 +1066,47 @@
             if (weatherChoice === zaragozaWeatherReal || 
                (weatherChoice === 'Soleado' && zaragozaWeatherReal === 'Sol y Nubes') ||
                (weatherChoice === 'Sol y Nubes' && zaragozaWeatherReal === 'Soleado')) {
-                showFeedback(true, "¡Excelente Trabajo!", "¡Has completado correctamente todas las actividades diarias de 'El parte'!", () => {
-                    showScreen('screen-home');
-                    speakText("¡Enhorabuena! Has terminado todas las actividades de hoy.");
+                showFeedback(true, "¡Excelente Trabajo!", "¡Pasa al último reto para elegir la ropa de hoy!", () => {
+                    showScreen('screen-challenge-5');
+                    speakText("Reto cinco: Elige la ropa adecuada para salir hoy.");
                 });
             } else {
                 showFeedback(false, "Casi, inténtalo de nuevo", `El tiempo observado en Zaragoza corresponde a: ${zaragozaWeatherReal}.`);
+            }
+        }
+
+        /* RETO 5: VESTIR A LA ANCIANA */
+        function toggleClothing(item) {
+            if (dressedItems.has(item)) {
+                dressedItems.delete(item);
+            } else {
+                dressedItems.add(item);
+            }
+            updateDressingUI();
+        }
+
+        function updateDressingUI() {
+            const display = document.getElementById('layer-text-display');
+            if (dressedItems.size === 0) {
+                display.textContent = "Sin vestir";
+            } else {
+                display.textContent = Array.from(dressedItems).join(' + ');
+            }
+        }
+
+        function resetDressing() {
+            dressedItems.clear();
+            updateDressingUI();
+        }
+
+        function verifyDressing() {
+            if (dressedItems.size === 0) {
+                showFeedback(false, "Falta elegir la ropa", "Selecciona al menos una prenda para vestir a la anciana.");
+            } else {
+                showFeedback(true, "¡Perfecto!", "¡Has completado correctamente todas las actividades diarias de 'El parte'!", () => {
+                    showScreen('screen-home');
+                    speakText("¡Enhorabuena! Has completado todas las actividades diarias con éxito.");
+                });
             }
         }
 
