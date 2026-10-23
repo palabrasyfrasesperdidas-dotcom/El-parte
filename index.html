@@ -2,490 +2,1053 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tablero de Orientación Temporal y Estimulación Cognitiva</title>
-    <!-- Tailwind CSS for modern responsive utility styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for clean, large visual icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font 'Fredoka' and 'Inter' for high legibility -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Parte - Tablero de Actividades Diarias</title>
+    <!-- Google Fonts para accesibilidad y estética -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@600;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
-        /* Base Accessibility and Blackboard Aesthetics */
-        body {
-            font-family: 'Fredoka', 'Inter', sans-serif;
-            touch-action: manipulation;
+        :root {
+            --bg-board: #1c3b2b;
+            --board-frame: #5c3a21;
+            --chalk-white: #ffffff;
+            --chalk-yellow: #fff3a1;
+            --card-bg: #ffffff;
+            --card-text: #d32f2f;
+            --accent-green: #2e7d32;
+            --accent-orange: #ef6c00;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             user-select: none;
             -webkit-user-select: none;
-            background-color: #1a2e22;
         }
 
-        /* Chalkboard Texture and Borders */
-        .chalkboard {
-            background: radial-gradient(circle, #2d4a36 0%, #172b1d 100%);
-            border: 14px solid #8B4513;
-            border-radius: 20px;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 10px 25px rgba(0, 0, 0, 0.5);
+        body {
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+            background-color: #0f1a13;
+            color: var(--chalk-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        /* Contenedor Principal Marco de Pizarra */
+        .board-container {
+            width: 100%;
+            max-width: 1024px;
+            background-color: var(--bg-board);
+            border: 16px solid var(--board-frame);
+            border-radius: 18px;
+            box-shadow: 0 10px 30px var(--shadow-color), inset 0 0 100px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh;
             position: relative;
+            justify-content: space-between;
         }
 
-        /* Chalk Text Effect */
-        .chalk-text {
-            color: #ffffff;
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.7), 2px 2px 4px rgba(0,0,0,0.8);
-            letter-spacing: 1px;
+        /* Pantallas */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
         }
 
-        .chalk-title {
-            color: #ffeb3b;
-            text-shadow: 0 0 4px rgba(255, 235, 59, 0.6), 2px 2px 4px rgba(0,0,0,0.9);
+        .screen.active {
+            display: flex;
         }
 
-        /* High-Contrast Interactive Keypad Buttons */
-        .num-btn {
-            background-color: #FFFFFF !important;
-            color: #D32F2F !important;
-            border: 4px solid #B71C1C;
-            box-shadow: 0 8px 0 #8E0000, 0 10px 15px rgba(0,0,0,0.4);
-            transition: all 0.1s ease;
+        /* Títulos */
+        h1.title-main {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            color: var(--chalk-yellow);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            margin-bottom: 5px;
+            letter-spacing: 2px;
         }
 
-        .num-btn:active, .num-btn.pressed {
-            transform: translateY(6px);
-            box-shadow: 0 2px 0 #8E0000, 0 4px 6px rgba(0,0,0,0.4);
+        p.subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 20px;
+            color: var(--chalk-white);
         }
 
-        /* Slot Box Styling for Date Representation */
-        .date-slot {
-            background-color: rgba(0, 0, 0, 0.45);
-            border: 4px stroke #ffffff;
-            border-style: dashed;
-            border-color: #a3e635;
-            transition: all 0.2s ease;
+        /* Lema e Imagen Promocional */
+        .hero-banner {
+            width: 100%;
+            max-width: 650px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 4px dashed rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .date-slot.filled {
-            background-color: #ffffff;
-            color: #111827;
-            border-style: solid;
-            border-color: #facc15;
+        .hero-img {
+            width: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 3px solid var(--chalk-white);
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        .date-slot.active {
-            animation: pulse-border 1.5s infinite;
+        .motto-text {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: var(--chalk-yellow);
+            margin-top: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
         }
 
-        @keyframes pulse-border {
-            0% { border-color: #facc15; }
-            50% { border-color: #ffffff; }
-            100% { border-color: #facc15; }
+        /* Botón Iniciar */
+        .btn-start {
+            background-color: var(--accent-orange);
+            color: #ffffff;
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: bold;
+            padding: 15px 40px;
+            border: 4px solid #ffffff;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+            transition: transform 0.1s, background-color 0.2s;
+            margin-top: 10px;
         }
 
-        /* Custom Utility Button Shadow */
-        .action-btn-delete {
-            background-color: #f97316;
-            border: 4px solid #c2410c;
-            box-shadow: 0 6px 0 #9a3412;
-        }
-        .action-btn-delete:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #9a3412;
+        .btn-start:hover, .btn-start:focus {
+            transform: scale(1.05);
+            background-color: #f57c00;
+            outline: none;
         }
 
-        .action-btn-check {
-            background-color: #22c55e;
-            border: 4px solid #15803d;
-            box-shadow: 0 6px 0 #166534;
-        }
-        .action-btn-check:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #166534;
+        .btn-start:active {
+            transform: scale(0.98);
         }
 
-        /* Touch Target Optimization */
-        .touch-target {
-            min-width: 68px;
-            min-height: 68px;
+        /* Encabezado del Reto */
+        .challenge-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px dashed rgba(255,255,255,0.3);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .challenge-title {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            color: var(--chalk-yellow);
+        }
+
+        .progress-badge {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        /* ÁREAS DE RETOS */
+        .workspace {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* RETO 1: LA FECHA */
+        .date-display-slots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .slot-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .slot-label {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--chalk-yellow);
+        }
+
+        .slots-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .slot {
+            width: clamp(50px, 10vw, 75px);
+            height: clamp(65px, 12vw, 95px);
+            background: rgba(0, 0, 0, 0.4);
+            border: 3px dashed var(--chalk-white);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: bold;
+            color: var(--chalk-yellow);
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .slot.active-slot {
+            border-color: #ffeb3b;
+            background: rgba(255, 235, 59, 0.15);
+            box-shadow: 0 0 12px rgba(255, 235, 59, 0.5);
+        }
+
+        .date-separator {
+            font-size: 3rem;
+            color: var(--chalk-white);
+            align-self: flex-end;
+            margin-bottom: 10px;
+        }
+
+        /* RETO 2: RELOJ ANALÓGICO */
+        .clock-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .analog-clock {
+            width: clamp(220px, 40vw, 290px);
+            height: clamp(220px, 40vw, 290px);
+            background-color: #fcfcf8;
+            border: 10px solid #d4a359;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .clock-center-dot {
+            width: 16px;
+            height: 16px;
+            background: #222;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .clock-number {
+            position: absolute;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #222;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        /* Posicionamiento números del reloj */
+        .num-12 { top: 8px; left: calc(50% - 15px); }
+        .num-1  { top: 22px; right: 45px; }
+        .num-2  { top: 55px; right: 18px; }
+        .num-3  { top: calc(50% - 15px); right: 8px; }
+        .num-4  { bottom: 55px; right: 18px; }
+        .num-5  { bottom: 22px; right: 45px; }
+        .num-6  { bottom: 8px; left: calc(50% - 15px); }
+        .num-7  { bottom: 22px; left: 45px; }
+        .num-8  { bottom: 55px; left: 18px; }
+        .num-9  { top: calc(50% - 15px); left: 8px; }
+        .num-10 { top: 55px; left: 18px; }
+        .num-11 { top: 22px; left: 45px; }
+
+        .hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 6px;
+            transition: transform 0.4s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+        }
+
+        .hour-hand {
+            width: 8px;
+            height: 28%;
+            background-color: #d32f2f;
+            z-index: 5;
+        }
+
+        .minute-hand {
+            width: 5px;
+            height: 38%;
+            background-color: #1976d2;
+            z-index: 6;
+        }
+
+        .clock-status-box {
+            font-size: 1.3rem;
+            color: var(--chalk-yellow);
+            background: rgba(0,0,0,0.3);
+            padding: 8px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* BANCO DE OPCIONES INFERIORES */
+        .bottom-bank {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.35);
+            border-top: 3px solid rgba(255, 255, 255, 0.2);
+            padding: 15px 10px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bank-instruction {
+            font-size: 1.2rem;
+            color: var(--chalk-white);
+        }
+
+        .tiles-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 900px;
+        }
+
+        /* Fichas Cuadradas Blancas con Texto/Número Rojo */
+        .tile-card {
+            width: clamp(55px, 10vw, 75px);
+            height: clamp(65px, 11vw, 85px);
+            background-color: var(--card-bg);
+            color: var(--card-text);
+            border: 3px solid #b71c1c;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            font-weight: 800;
+            box-shadow: 0 5px 0 #801010, 0 8px 12px rgba(0,0,0,0.4);
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .tile-card:hover, .tile-card:focus {
+            transform: translateY(-4px);
+            box-shadow: 0 9px 0 #801010, 0 12px 15px rgba(0,0,0,0.4);
+            outline: none;
+        }
+
+        .tile-card:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #801010, 0 4px 6px rgba(0,0,0,0.4);
+        }
+
+        /* Tarjetas de Estaciones y Clima */
+        .tile-image-card {
+            width: clamp(130px, 22vw, 190px);
+            height: clamp(130px, 22vw, 190px);
+            background-color: #ffffff;
+            border: 4px solid #333333;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #222222, 0 10px 15px rgba(0,0,0,0.5);
+            transition: transform 0.1s;
+        }
+
+        .tile-image-card:hover, .tile-image-card:focus {
+            transform: translateY(-4px);
+            outline: none;
+            border-color: var(--accent-orange);
+        }
+
+        .tile-image-card img {
+            width: 100%;
+            height: 70%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .tile-image-card span {
+            color: #111111;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        /* Botones de Acción */
+        .action-bar {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .btn-action {
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .btn-clear {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .btn-verify {
+            background-color: var(--accent-green);
+            color: white;
+            font-size: 1.5rem;
+            padding: 12px 35px;
+        }
+
+        /* MODAL DE RETROALIMENTACIÓN */
+        .modal-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            border-radius: 14px;
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-card {
+            background-color: var(--bg-board);
+            border: 6px solid var(--chalk-white);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+        }
+
+        .modal-message {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--chalk-yellow);
+            line-height: 1.2;
+        }
+
+        .modal-subtext {
+            font-size: 1.3rem;
+            color: var(--chalk-white);
+        }
+
+        .btn-modal {
+            background-color: var(--accent-orange);
+            color: white;
+            font-size: 1.6rem;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 40px;
+            border: 3px solid white;
+            cursor: pointer;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.4);
+        }
+
+        :focus-visible {
+            outline: 4px solid #ffeb3b !important;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-2 sm:p-4 text-white">
+<body>
 
-    <!-- APP CONTAINER -->
-    <div class="max-w-4xl w-full mx-auto flex-1 flex flex-col justify-center">
-
-        <!-- ==================== PANTALLA 1: INICIO / BIENVENIDA ==================== -->
-        <div id="screen-welcome" class="bg-emerald-900/90 border-8 border-amber-800 rounded-3xl p-6 md:p-10 text-center shadow-2xl backdrop-blur flex flex-col items-center">
+    <div class="board-container">
+        
+        <!-- PANTALLA 0: INICIO -->
+        <div id="screen-home" class="screen active">
+            <h1 class="title-main">El parte</h1>
+            <p class="subtitle">¡Bienvenido/a al tablero de actividades diarias!</p>
             
-            <h1 class="text-3xl sm:text-5xl font-extrabold text-yellow-300 mb-4 tracking-wide leading-tight drop-shadow-md">
-                <i class="fa-solid fa-calendar-day mr-3"></i>El parte
-            </h1>
-
-            <p class="text-xl sm:text-2xl text-emerald-100 font-semibold mb-6 max-w-2xl">
-                ¡Bienvenido/a al tablero de actividades diarias!
-            </p>
-
-            <!-- Imagen Cálida, Evocadora y Alegre para la Tercera Edad -->
-            <div class="relative w-full max-w-md h-56 sm:h-72 rounded-2xl overflow-hidden border-4 border-amber-600 shadow-lg mb-8">
-                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80" 
-                     alt="Personas ancianas sonriendo alegremente y compartiendo momentos positivos" 
-                     class="w-full h-full object-cover"
-                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1581579438747-1dc8d1e0736f?auto=format&fit=crop&w=800&q=80';">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end justify-center p-4">
-                    <span class="text-yellow-300 text-xl sm:text-3xl font-black text-center drop-shadow-lg tracking-wide uppercase">
-                        "Todos los días aprendemos"
-                    </span>
-                </div>
+            <div class="hero-banner">
+                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d1e292c7?auto=format&fit=crop&w=800&q=80" 
+                     alt="Personas mayores felices realizando actividades" 
+                     class="hero-img"
+                     onerror="this.src='https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80'">
+                <div class="motto-text">"Todos los días aprendemos"</div>
             </div>
 
-            <!-- Botón Grande de Alto Contraste para Iniciar -->
-            <button id="btn-start" onclick="startGame()" 
-                    class="touch-target w-full sm:w-auto px-10 py-5 bg-yellow-400 hover:bg-yellow-300 text-gray-900 text-2xl sm:text-3xl font-black rounded-2xl border-4 border-yellow-600 shadow-xl transform transition active:scale-95 flex items-center justify-center gap-4">
-                <i class="fa-solid fa-play text-3xl"></i>
-                <span>COMENZAR ACTIVIDAD</span>
-            </button>
+            <button class="btn-start" onclick="startApp()">Comenzar las actividades</button>
         </div>
 
-
-        <!-- ==================== PANTALLA 2: ACTIVIDAD PIZARRA ==================== -->
-        <div id="screen-activity" class="hidden chalkboard p-4 sm:p-8 flex flex-col justify-between min-h-[85vh]">
-            
-            <!-- Encabezado de Pizarra -->
-            <div class="flex justify-between items-center border-b-2 border-emerald-600/50 pb-3 mb-4">
-                <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-graduation-cap text-yellow-400 text-2xl sm:text-4xl"></i>
-                    <h2 class="text-xl sm:text-3xl font-bold chalk-title">¿Qué fecha es hoy?</h2>
-                </div>
-                <button onclick="resetActivity()" class="bg-emerald-800 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl border-2 border-emerald-500 font-bold text-sm sm:text-base flex items-center gap-2">
-                    <i class="fa-solid fa-house"></i>
-                    <span class="hidden sm:inline">Inicio</span>
-                </button>
+        <!-- PANTALLA RETO 1: LA FECHA -->
+        <div id="screen-challenge-1" class="screen">
+            <div class="challenge-header">
+                <div class="challenge-title">1. ¿Qué fecha es hoy?</div>
+                <div class="progress-badge">Reto 1 de 4</div>
             </div>
 
-            <!-- Zona Superior: Casilleros de la Fecha (DD / MM / AAAA) -->
-            <div class="my-auto py-4">
-                <p class="text-center text-lg sm:text-2xl chalk-text mb-4 font-bold">
-                    Selecciona los números en orden para completar la fecha:
-                </p>
-
-                <!-- Slots de Fecha con Separadores Visuales Claro -->
-                <div class="flex flex-wrap items-center justify-center gap-1 sm:gap-3 my-2">
-                    
-                    <!-- DÍA (DD) -->
-                    <div class="flex gap-1 sm:gap-2 bg-emerald-950/60 p-2 sm:p-3 rounded-2xl border-2 border-emerald-500/50">
-                        <div id="slot-0" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black active"></div>
-                        <div id="slot-1" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                    </div>
-
-                    <span class="text-4xl sm:text-6xl font-black text-yellow-400 mx-1">/</span>
-
-                    <!-- MES (MM) -->
-                    <div class="flex gap-1 sm:gap-2 bg-emerald-950/60 p-2 sm:p-3 rounded-2xl border-2 border-emerald-500/50">
-                        <div id="slot-2" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                        <div id="slot-3" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                    </div>
-
-                    <span class="text-4xl sm:text-6xl font-black text-yellow-400 mx-1">/</span>
-
-                    <!-- AÑO (AAAA) -->
-                    <div class="flex gap-1 sm:gap-2 bg-emerald-950/60 p-2 sm:p-3 rounded-2xl border-2 border-emerald-500/50">
-                        <div id="slot-4" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                        <div id="slot-5" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                        <div id="slot-6" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                        <div id="slot-7" class="date-slot touch-target w-11 h-16 sm:w-16 sm:h-24 rounded-xl flex items-center justify-center text-3xl sm:text-5xl font-black"></div>
-                    </div>
-
-                </div>
-
-                <!-- Leyenda de formato -->
-                <div class="flex justify-center gap-8 text-xs sm:text-base chalk-text opacity-90 mt-2 font-bold tracking-widest text-yellow-200">
-                    <span>DÍA</span>
-                    <span class="ml-4">MES</span>
-                    <span class="ml-8">AÑO</span>
-                </div>
-            </div>
-
-            <!-- Zona Inferior: Banco de Números e Interacción Táctil/Teclado -->
-            <div class="bg-black/40 p-3 sm:p-5 rounded-2xl border-2 border-emerald-600/40 mt-auto">
+            <div class="workspace">
+                <p class="bank-instruction" style="margin-bottom: 10px;">Selecciona la casilla y luego pulsa los números de abajo:</p>
                 
-                <!-- Botones Numéricos (0 - 9) Infinitos (Rojo sobre Blanco) -->
-                <div class="grid grid-cols-5 sm:grid-cols-10 gap-2 sm:gap-3 mb-4">
-                    <button onclick="pressNum('1')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">1</button>
-                    <button onclick="pressNum('2')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">2</button>
-                    <button onclick="pressNum('3')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">3</button>
-                    <button onclick="pressNum('4')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">4</button>
-                    <button onclick="pressNum('5')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">5</button>
-                    <button onclick="pressNum('6')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">6</button>
-                    <button onclick="pressNum('7')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">7</button>
-                    <button onclick="pressNum('8')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">8</button>
-                    <button onclick="pressNum('9')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">9</button>
-                    <button onclick="pressNum('0')" class="num-btn touch-target h-14 sm:h-20 rounded-2xl text-3xl sm:text-4xl font-black flex items-center justify-center">0</button>
+                <div class="date-display-slots">
+                    <div class="slot-group">
+                        <span class="slot-label">Día</span>
+                        <div class="slots-row">
+                            <div class="slot active-slot" id="d1" onclick="selectSlot('d1')">-</div>
+                            <div class="slot" id="d2" onclick="selectSlot('d2')">-</div>
+                        </div>
+                    </div>
+
+                    <div class="date-separator">/</div>
+
+                    <div class="slot-group">
+                        <span class="slot-label">Mes</span>
+                        <div class="slots-row">
+                            <div class="slot" id="m1" onclick="selectSlot('m1')">-</div>
+                            <div class="slot" id="m2" onclick="selectSlot('m2')">-</div>
+                        </div>
+                    </div>
+
+                    <div class="date-separator">/</div>
+
+                    <div class="slot-group">
+                        <span class="slot-label">Año</span>
+                        <div class="slots-row">
+                            <div class="slot" id="a1" onclick="selectSlot('a1')">2</div>
+                            <div class="slot" id="a2" onclick="selectSlot('a2')">0</div>
+                            <div class="slot" id="a3" onclick="selectSlot('a3')">2</div>
+                            <div class="slot" id="a4" onclick="selectSlot('a4')">6</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Botones de Acción (Borrar y Validar) -->
-                <div class="flex gap-3 justify-center">
-                    <button onclick="deleteLastNum()" 
-                            class="action-btn-delete touch-target flex-1 max-w-xs py-3 sm:py-4 rounded-2xl text-white text-lg sm:text-2xl font-black flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-delete-left text-2xl"></i>
-                        <span>BORRAR</span>
-                    </button>
-
-                    <button onclick="clearAll()" 
-                            class="bg-gray-700 hover:bg-gray-600 border-4 border-gray-900 py-3 sm:py-4 px-4 rounded-2xl text-white text-base sm:text-xl font-bold flex items-center justify-center">
-                        <i class="fa-solid fa-rotate-left mr-1"></i> Reiniciar
-                    </button>
+                <div class="action-bar">
+                    <button class="btn-action btn-clear" onclick="clearSelectedSlot()">Borrar casilla</button>
+                    <button class="btn-action btn-verify" onclick="verifyDate()">Comprobar Fecha</button>
                 </div>
+            </div>
 
+            <div class="bottom-bank">
+                <span class="bank-instruction">Números disponibles (Toca o pulsa en teclado):</span>
+                <div class="tiles-grid" id="number-bank-c1"></div>
             </div>
         </div>
 
-        <!-- ==================== PANTALLA MODAL DE FEEDBACK ==================== -->
-        <div id="feedback-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div id="modal-content" class="max-w-md w-full rounded-3xl p-6 sm:p-8 text-center border-8 shadow-2xl flex flex-col items-center transform transition-all">
-                
-                <!-- Icono Dinámico -->
-                <div id="modal-icon-container" class="w-24 h-24 rounded-full flex items-center justify-center text-5xl mb-4 shadow-inner">
-                    <!-- Inyectado por JS -->
+        <!-- PANTALLA RETO 2: EL RELOJ ANALÓGICO -->
+        <div id="screen-challenge-2" class="screen">
+            <div class="challenge-header">
+                <div class="challenge-title">2. ¿Qué hora es en el reloj?</div>
+                <div class="progress-badge">Reto 2 de 4</div>
+            </div>
+
+            <div class="workspace">
+                <div class="clock-container">
+                    <div class="analog-clock">
+                        <div class="clock-center-dot"></div>
+                        <div class="clock-number num-12">12</div>
+                        <div class="clock-number num-1">1</div>
+                        <div class="clock-number num-2">2</div>
+                        <div class="clock-number num-3">3</div>
+                        <div class="clock-number num-4">4</div>
+                        <div class="clock-number num-5">5</div>
+                        <div class="clock-number num-6">6</div>
+                        <div class="clock-number num-7">7</div>
+                        <div class="clock-number num-8">8</div>
+                        <div class="clock-number num-9">9</div>
+                        <div class="clock-number num-10">10</div>
+                        <div class="clock-number num-11">11</div>
+
+                        <div class="hand hour-hand" id="clock-hour-hand" style="transform: rotate(0deg);"></div>
+                        <div class="hand minute-hand" id="clock-minute-hand" style="transform: rotate(0deg);"></div>
+                    </div>
+
+                    <div class="clock-status-box" id="clock-status-text">
+                        Paso 1: Elige la aguja de la HORA (fichas rojas de abajo)
+                    </div>
                 </div>
 
-                <!-- Título -->
-                <h3 id="modal-title" class="text-3xl sm:text-4xl font-black mb-3">
-                    <!-- Inyectado por JS -->
-                </h3>
+                <div class="action-bar" style="margin-top: 15px;">
+                    <button class="btn-action btn-clear" onclick="resetClockChallenge()">Reiniciar Reloj</button>
+                    <button class="btn-action btn-verify" id="btn-verify-clock" style="display:none;" onclick="verifyClock()">Comprobar Hora</button>
+                </div>
+            </div>
 
-                <!-- Mensaje motivador -->
-                <p id="modal-message" class="text-xl sm:text-2xl font-semibold mb-6 leading-relaxed">
-                    <!-- Inyectado por JS -->
-                </p>
+            <div class="bottom-bank">
+                <span class="bank-instruction" id="clock-bank-title">Selecciona la HORA (1 a 12):</span>
+                <div class="tiles-grid" id="clock-options-bank"></div>
+            </div>
+        </div>
 
-                <!-- Botón Acción Modal -->
-                <button id="modal-btn" onclick="closeModal()" 
-                        class="touch-target w-full py-4 px-6 rounded-2xl text-2xl font-black shadow-lg border-4 transition transform active:scale-95">
-                    Continuar
-                </button>
+        <!-- PANTALLA RETO 3: LA ESTACIÓN DEL AÑO -->
+        <div id="screen-challenge-3" class="screen">
+            <div class="challenge-header">
+                <div class="challenge-title">3. ¿En qué estación del año estamos?</div>
+                <div class="progress-badge">Reto 3 de 4</div>
+            </div>
+
+            <div class="workspace">
+                <p class="bank-instruction" style="margin-bottom: 20px;">Toca o selecciona la imagen correcta de la estación actual:</p>
+                <div class="tiles-grid" style="gap: 20px;">
+                    <button class="tile-image-card" onclick="selectSeason('Primavera')">
+                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400&q=80" alt="Primavera con flores" onerror="this.src='https://via.placeholder.com/200?text=Primavera'">
+                        <span>Primavera</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectSeason('Verano')">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Verano y playa" onerror="this.src='https://via.placeholder.com/200?text=Verano'">
+                        <span>Verano</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectSeason('Otoño')">
+                        <img src="https://images.unsplash.com/photo-1507181179412-1e89099e8f92?auto=format&fit=crop&w=400&q=80" alt="Otoño con hojas secas" onerror="this.src='https://via.placeholder.com/200?text=Otoño'">
+                        <span>Otoño</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectSeason('Invierno')">
+                        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=400&q=80" alt="Invierno con nieve" onerror="this.src='https://via.placeholder.com/200?text=Invierno'">
+                        <span>Invierno</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA RETO 4: EL CLIMA EN ZARAGOZA -->
+        <div id="screen-challenge-4" class="screen">
+            <div class="challenge-header">
+                <div class="challenge-title">4. ¿Qué tiempo hace hoy en Zaragoza?</div>
+                <div class="progress-badge">Reto 4 de 4</div>
+            </div>
+
+            <div class="workspace">
+                <p class="bank-instruction" style="margin-bottom: 15px;">Observa el tiempo fuera y selecciona la opción correcta:</p>
+                <div class="tiles-grid" style="gap: 15px;">
+                    <button class="tile-image-card" onclick="selectWeather('Soleado')">
+                        <img src="https://images.unsplash.com/photo-1601297183305-6df142704ea2?auto=format&fit=crop&w=400&q=80" alt="Día Soleado" onerror="this.src='https://via.placeholder.com/200?text=Soleado'">
+                        <span>Soleado</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectWeather('Sol y Nubes')">
+                        <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=400&q=80" alt="Sol y Nubes" onerror="this.src='https://via.placeholder.com/200?text=Sol+y+Nubes'">
+                        <span>Sol y Nubes</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectWeather('Nublado')">
+                        <img src="https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=400&q=80" alt="Nublado" onerror="this.src='https://via.placeholder.com/200?text=Nublado'">
+                        <span>Nublado</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectWeather('Lluvia')">
+                        <img src="https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=400&q=80" alt="Lluvia" onerror="this.src='https://via.placeholder.com/200?text=Lluvia'">
+                        <span>Lluvia</span>
+                    </button>
+                    <button class="tile-image-card" onclick="selectWeather('Viento / Cierzo')">
+                        <img src="https://images.unsplash.com/photo-1505672678857-85e104f60064?auto=format&fit=crop&w=400&q=80" alt="Viento Cierzo" onerror="this.src='https://via.placeholder.com/200?text=Viento'">
+                        <span>Viento / Cierzo</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- VENTANA MODAL DE FEEDBACK -->
+        <div id="feedback-modal" class="modal-overlay">
+            <div class="modal-card">
+                <div id="modal-icon" class="modal-icon">🌟</div>
+                <div id="modal-message" class="modal-message">¡Enhorabuena!</div>
+                <div id="modal-subtext" class="modal-subtext">Has completado la actividad correctamente.</div>
+                <button id="modal-btn" class="btn-modal" onclick="closeModal()">¡CONTINUAR!</button>
             </div>
         </div>
 
     </div>
 
-    <!-- PIE DE PÁGINA ADAPTADO -->
-    <footer class="text-center text-xs sm:text-sm text-emerald-200/80 py-2">
-        Herramienta Educativa e Interactiva para la Orientación Temporal • Accesibilidad WAP / Web
-    </footer>
-
-    <!-- JAVASCRIPT LOGIC & AUDIO SYNTHESIS -->
     <script>
-        // ESTADO GLOBAL DE LA APLICACIÓN
-        let selectedNumbers = [];
-        const TOTAL_SLOTS = 8; // DDMMYYYY
-        let targetDateStr = ""; // Formato DDMMYYYY real
-        let formattedRealDateStr = ""; // Formato DD/MM/AAAA para feedback
+        let currentChallenge = 1;
+        let selectedSlotId = 'd1';
+        let selectedClockHour = null;
+        let selectedClockMinute = null;
+        let zaragozaWeatherReal = 'Soleado'; 
+        let nextStepCallback = null;
 
-        // Inicialización al cargar la página
         window.onload = function() {
-            initTargetDate();
-            setupKeyboardInput();
+            setupNumberBank();
+            setupKeyboardNavigation();
+            fetchZaragozaWeather();
         };
 
-        // Calcula la fecha actual en tiempo real mediante JavaScript
-        function initTargetDate() {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = String(now.getFullYear());
-
-            targetDateStr = `${day}${month}${year}`;
-            formattedRealDateStr = `${day}/${month}/${year}`;
-            console.log("Fecha Objetivo Calculada:", formattedRealDateStr);
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
         }
 
-        // Cambiar a la pantalla de la pizarra
-        function startGame() {
-            document.getElementById('screen-welcome').classList.add('hidden');
-            document.getElementById('screen-activity').classList.remove('hidden');
-            playSound(523.25, 'sine', 0.15); // C5
+        function startApp() {
+            currentChallenge = 1;
+            showScreen('screen-challenge-1');
+            selectSlot('d1');
+            speakText("Reto uno: Selecciona los números para poner la fecha de hoy.");
         }
 
-        // Volver a inicio
-        function resetActivity() {
-            clearAll();
-            document.getElementById('screen-activity').classList.add('hidden');
-            document.getElementById('screen-welcome').classList.remove('hidden');
-        }
-
-        // Agregar número seleccionado al banco
-        function pressNum(num) {
-            if (selectedNumbers.length < TOTAL_SLOTS) {
-                selectedNumbers.push(num);
-                updateUI();
-                playSound(400 + (selectedNumbers.length * 40), 'sine', 0.1);
-
-                // Si se completan los 8 dígitos, validar automáticamente
-                if (selectedNumbers.length === TOTAL_SLOTS) {
-                    setTimeout(validateDate, 300);
-                }
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
             }
         }
 
-        // Borrar el último número ingresado
-        function deleteLastNum() {
-            if (selectedNumbers.length > 0) {
-                selectedNumbers.pop();
-                updateUI();
-                playSound(300, 'square', 0.08);
-            }
-        }
-
-        // Reiniciar los casilleros
-        function clearAll() {
-            selectedNumbers = [];
-            updateUI();
-            playSound(250, 'sine', 0.12);
-        }
-
-        // Actualizar la interfaz visual de las casillas en la pizarra
-        function updateUI() {
-            for (let i = 0; i < TOTAL_SLOTS; i++) {
-                const slot = document.getElementById(`slot-${i}`);
-                if (i < selectedNumbers.length) {
-                    slot.innerText = selectedNumbers[i];
-                    slot.classList.add('filled');
-                    slot.classList.remove('active');
-                } else {
-                    slot.innerText = '';
-                    slot.classList.remove('filled');
-                    if (i === selectedNumbers.length) {
-                        slot.classList.add('active'); // Destaca la casilla actual a rellenar
-                    } else {
-                        slot.classList.remove('active');
-                    }
-                }
-            }
-        }
-
-        // Validar si la fecha elegida coincide con la fecha real del día
-        function validateDate() {
-            const userDateStr = selectedNumbers.join('');
-
-            if (userDateStr === targetDateStr) {
-                // ACERTADO: Mostrar pantalla de felicitación
-                showFeedback(
-                    true,
-                    "¡Excelente Trabajo!",
-                    `¡Has acertado! Hoy es <strong>${formattedRealDateStr}</strong>. ¡Muy bien orientado!`
-                );
-                playSuccessSound();
-            } else {
-                // INCORRECTO: Mostrar mensaje estimulante
-                showFeedback(
-                    false,
-                    "Casi, inténtalo de nuevo",
-                    `La fecha ingresada no coincide con el día de hoy. ¡Revisa los números e inténtalo otra vez!`
-                );
-                playErrorSound();
-            }
-        }
-
-        // Muestra el Modal de Feedback con alto contraste
-        function showFeedback(isSuccess, title, message) {
-            const modal = document.getElementById('feedback-modal');
-            const modalContent = document.getElementById('modal-content');
-            const iconContainer = document.getElementById('modal-icon-container');
-            const titleEl = document.getElementById('modal-title');
-            const msgEl = document.getElementById('modal-message');
-            const btnEl = document.getElementById('modal-btn');
-
-            if (isSuccess) {
-                modalContent.className = "max-w-md w-full rounded-3xl p-6 sm:p-8 text-center border-8 border-green-500 bg-emerald-900 text-white shadow-2xl flex flex-col items-center";
-                iconContainer.className = "w-24 h-24 rounded-full bg-green-500 text-white flex items-center justify-center text-5xl mb-4 shadow-lg";
-                iconContainer.innerHTML = '<i class="fa-solid fa-trophy"></i>';
-                titleEl.className = "text-3xl sm:text-4xl font-black mb-3 text-yellow-300";
-                btnEl.className = "touch-target w-full py-4 px-6 rounded-2xl text-2xl font-black bg-yellow-400 hover:bg-yellow-300 text-gray-900 border-4 border-yellow-600 shadow-lg";
-                btnEl.innerText = "¡CONTINUAR!";
-            } else {
-                modalContent.className = "max-w-md w-full rounded-3xl p-6 sm:p-8 text-center border-8 border-amber-500 bg-stone-900 text-white shadow-2xl flex flex-col items-center";
-                iconContainer.className = "w-24 h-24 rounded-full bg-amber-500 text-white flex items-center justify-center text-5xl mb-4 shadow-lg";
-                iconContainer.innerHTML = '<i class="fa-solid fa-rotate-right"></i>';
-                titleEl.className = "text-3xl sm:text-4xl font-black mb-3 text-amber-400";
-                btnEl.className = "touch-target w-full py-4 px-6 rounded-2xl text-2xl font-black bg-amber-500 hover:bg-amber-400 text-gray-950 border-4 border-amber-700 shadow-lg";
-                btnEl.innerText = "VOLVER A INTENTAR";
-            }
-
-            titleEl.innerText = title;
-            msgEl.innerHTML = message;
-            modal.classList.remove('hidden');
-        }
-
-        // Cierra el Modal
-        function closeModal() {
-            document.getElementById('feedback-modal').classList.add('hidden');
-            if (selectedNumbers.length === TOTAL_SLOTS && selectedNumbers.join('') !== targetDateStr) {
-                clearAll(); // Limpia para facilitar un nuevo intento
-            }
-        }
-
-        // Soporte de Teclado Físico para PC/Web
-        function setupKeyboardInput() {
-            document.addEventListener('keydown', (e) => {
-                const activityVisible = !document.getElementById('screen-activity').classList.contains('hidden');
-                const modalVisible = !document.getElementById('feedback-modal').classList.contains('hidden');
-
-                if (modalVisible) {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        closeModal();
-                    }
-                    return;
-                }
-
-                if (activityVisible) {
-                    if (e.key >= '0' && e.key <= '9') {
-                        pressNum(e.key);
-                    } else if (e.key === 'Backspace') {
-                        deleteLastNum();
-                    } else if (e.key === 'Escape') {
-                        clearAll();
-                    }
-                }
-            });
-        }
-
-        // Sintetizador de audio simple con Web Audio API (Sin archivos externos)
-        function playSound(freq, type = 'sine', duration = 0.1) {
+        function playAudioFeedback(isSuccess) {
             try {
-                const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                if (!AudioCtx) return;
-                const ctx = new AudioCtx();
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                gain.gain.setValueAtTime(0.15, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-
                 osc.connect(gain);
                 gain.connect(ctx.destination);
 
-                osc.start();
-                osc.stop(ctx.currentTime + duration);
+                if (isSuccess) {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15);
+                    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.3);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.6);
+                } else {
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    osc.frequency.setValueAtTime(196, ctx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.5);
+                }
             } catch (e) {
-                // Silencioso si el navegador restringe el audio sin interacción previa
+                console.log("Audio no disponible");
             }
         }
 
-        function playSuccessSound() {
-            playSound(523.25, 'triangle', 0.15); // C5
-            setTimeout(() => playSound(659.25, 'triangle', 0.15), 150); // E5
-            setTimeout(() => playSound(783.99, 'triangle', 0.3), 300);  // G5
+        function showFeedback(isSuccess, message, subtext, onContinue) {
+            playAudioFeedback(isSuccess);
+            const modal = document.getElementById('feedback-modal');
+            const iconEl = document.getElementById('modal-icon');
+            const msgEl = document.getElementById('modal-message');
+            const subEl = document.getElementById('modal-subtext');
+            const btnEl = document.getElementById('modal-btn');
+
+            if (isSuccess) {
+                iconEl.textContent = '🎉';
+                msgEl.textContent = message || '¡Excelente Trabajo!';
+                subEl.textContent = subtext || '¡Has acertado!';
+                btnEl.textContent = '¡CONTINUAR!';
+                speakText("¡Muy bien! Enhorabuena, has acertado.");
+            } else {
+                iconEl.textContent = '🤔';
+                msgEl.textContent = message || 'Casi, inténtalo de nuevo';
+                subEl.textContent = subtext || 'Revisa tu respuesta con calma.';
+                btnEl.textContent = 'Volver a intentar';
+                speakText("Casi, inténtalo de nuevo.");
+            }
+
+            nextStepCallback = onContinue;
+            modal.classList.add('active');
         }
 
-        function playErrorSound() {
-            playSound(300, 'sawtooth', 0.2);
-            setTimeout(() => playSound(220, 'sawtooth', 0.3), 200);
+        function closeModal() {
+            document.getElementById('feedback-modal').classList.remove('active');
+            if (nextStepCallback) {
+                const cb = nextStepCallback;
+                nextStepCallback = null;
+                cb();
+            }
+        }
+
+        /* RETO 1: LA FECHA */
+        function setupNumberBank() {
+            const bank = document.getElementById('number-bank-c1');
+            bank.innerHTML = '';
+            for (let i = 0; i <= 9; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'tile-card';
+                btn.textContent = i;
+                btn.onclick = () => pressNumberKey(i);
+                bank.appendChild(btn);
+            }
+        }
+
+        function selectSlot(slotId) {
+            document.querySelectorAll('.slot').forEach(s => s.classList.remove('active-slot'));
+            selectedSlotId = slotId;
+            const slotEl = document.getElementById(slotId);
+            if (slotEl) slotEl.classList.add('active-slot');
+        }
+
+        function pressNumberKey(num) {
+            if (!selectedSlotId) return;
+            const slotEl = document.getElementById(selectedSlotId);
+            if (slotEl) {
+                slotEl.textContent = num;
+                advanceToNextSlot(selectedSlotId);
+            }
+        }
+
+        function advanceToNextSlot(currentId) {
+            const slotOrder = ['d1', 'd2', 'm1', 'm2', 'a1', 'a2', 'a3', 'a4'];
+            const idx = slotOrder.indexOf(currentId);
+            if (idx >= 0 && idx < slotOrder.length - 1) {
+                selectSlot(slotOrder[idx + 1]);
+            }
+        }
+
+        function clearSelectedSlot() {
+            if (selectedSlotId) {
+                document.getElementById(selectedSlotId).textContent = '-';
+            }
+        }
+
+        function verifyDate() {
+            const d1 = document.getElementById('d1').textContent;
+            const d2 = document.getElementById('d2').textContent;
+            const m1 = document.getElementById('m1').textContent;
+            const m2 = document.getElementById('m2').textContent;
+            const a1 = document.getElementById('a1').textContent;
+            const a2 = document.getElementById('a2').textContent;
+            const a3 = document.getElementById('a3').textContent;
+            const a4 = document.getElementById('a4').textContent;
+
+            const userDay = parseInt(d1 + d2, 10);
+            const userMonth = parseInt(m1 + m2, 10);
+            const userYear = parseInt(a1 + a2 + a3 + a4, 10);
+
+            const now = new Date();
+            const realDay = now.getDate();
+            const realMonth = now.getMonth() + 1;
+            const realYear = now.getFullYear();
+
+            if (userDay === realDay && userMonth === realMonth && userYear === realYear) {
+                showFeedback(true, "¡Excelente Trabajo!", `¡Has acertado! Hoy es ${realDay}/${realMonth}/${realYear}. ¡Muy bien orientado!`, () => {
+                    initClockChallenge();
+                    showScreen('screen-challenge-2');
+                    speakText("Reto dos: Coloca las agujas del reloj en la hora actual.");
+                });
+            } else {
+                showFeedback(false, "Casi, inténtalo de nuevo", `Hoy es día ${realDay} del mes ${realMonth} del año ${realYear}.`);
+            }
+        }
+
+        /* RETO 2: EL RELOJ ANALÓGICO */
+        function initClockChallenge() {
+            selectedClockHour = null;
+            selectedClockMinute = null;
+            document.getElementById('clock-hour-hand').style.transform = 'rotate(0deg)';
+            document.getElementById('clock-minute-hand').style.transform = 'rotate(0deg)';
+            document.getElementById('btn-verify-clock').style.display = 'none';
+            renderClockHourBank();
+        }
+
+        function renderClockHourBank() {
+            const titleEl = document.getElementById('clock-bank-title');
+            const bank = document.getElementById('clock-options-bank');
+            titleEl.textContent = "Selecciona la HORA de la aguja corta (1 al 12):";
+            document.getElementById('clock-status-text').textContent = "Paso 1: Selecciona la HORA de la aguja";
+            bank.innerHTML = '';
+
+            for (let h = 1; h <= 12; h++) {
+                const btn = document.createElement('button');
+                btn.className = 'tile-card';
+                btn.textContent = h;
+                btn.onclick = () => selectClockHour(h);
+                bank.appendChild(btn);
+            }
+        }
+
+        function selectClockHour(hour) {
+            selectedClockHour = hour;
+            const deg = hour * 30;
+            document.getElementById('clock-hour-hand').style.transform = `rotate(${deg}deg)`;
+            renderClockMinuteBank();
+        }
+
+        function renderClockMinuteBank() {
+            const titleEl = document.getElementById('clock-bank-title');
+            const bank = document.getElementById('clock-options-bank');
+            titleEl.textContent = "Selecciona los MINUTOS de la aguja larga (de 5 en 5):";
+            document.getElementById('clock-status-text').textContent = `Hora marcada: ${selectedClockHour}h. Ahora elige los MINUTOS:`;
+            bank.innerHTML = '';
+
+            const minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+            minutes.forEach(m => {
+                const btn = document.createElement('button');
+                btn.className = 'tile-card';
+                btn.style.width = 'clamp(60px, 12vw, 85px)';
+                btn.textContent = m < 10 ? '0' + m : m;
+                btn.onclick = () => selectClockMinute(m);
+                bank.appendChild(btn);
+            });
+        }
+
+        function selectClockMinute(min) {
+            selectedClockMinute = min;
+            const minDeg = min * 6;
+            document.getElementById('clock-minute-hand').style.transform = `rotate(${minDeg}deg)`;
+            document.getElementById('clock-status-text').textContent = `Hora seleccionada: ${selectedClockHour}:${min < 10 ? '0'+min : min}`;
+            document.getElementById('btn-verify-clock').style.display = 'inline-block';
+        }
+
+        function resetClockChallenge() {
+            initClockChallenge();
+        }
+
+        function verifyClock() {
+            if (selectedClockHour === null || selectedClockMinute === null) return;
+
+            const now = new Date();
+            let realHours = now.getHours() % 12;
+            if (realHours === 0) realHours = 12;
+            const realMinutes = now.getMinutes();
+
+            const userTotalMin = (selectedClockHour % 12) * 60 + selectedClockMinute;
+            const realTotalMin = (realHours % 12) * 60 + realMinutes;
+
+            const diff = Math.abs(userTotalMin - realTotalMin);
+
+            if (diff <= 5 || diff >= 715) {
+                showFeedback(true, "¡Hora Correcta!", "Has puesto las agujas del reloj en hora perfectamente.", () => {
+                    showScreen('screen-challenge-3');
+                    speakText("Reto tres: Selecciona la estación del año.");
+                });
+            } else {
+                const minutesFormatted = realMinutes < 10 ? '0' + realMinutes : realMinutes;
+                showFeedback(false, "Casi, inténtalo de nuevo", `En Zaragoza son las ${realHours}:${minutesFormatted}. Revisa las agujas.`);
+            }
+        }
+
+        /* RETO 3: ESTACIÓN DEL AÑO */
+        function selectSeason(seasonName) {
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            const day = now.getDate();
+
+            let realSeason = 'Invierno';
+            if ((month === 3 && day >= 21) || month === 4 || month === 5 || (month === 6 && day < 21)) {
+                realSeason = 'Primavera';
+            } else if ((month === 6 && day >= 21) || month === 7 || month === 8 || (month === 9 && day < 23)) {
+                realSeason = 'Verano';
+            } else if ((month === 9 && day >= 23) || month === 10 || month === 11 || (month === 12 && day < 21)) {
+                realSeason = 'Otoño';
+            }
+
+            if (seasonName === realSeason) {
+                showFeedback(true, "¡Estación Correcta!", `Efectivamente, estamos en ${realSeason}.`, () => {
+                    showScreen('screen-challenge-4');
+                    speakText("Reto cuatro: Selecciona el clima de hoy en Zaragoza.");
+                });
+            } else {
+                showFeedback(false, "Casi, inténtalo de nuevo", `Actualmente estamos en ${realSeason}. Toca la imagen correspondiente.`);
+            }
+        }
+
+        /* RETO 4: CLIMA EN ZARAGOZA */
+        async function fetchZaragozaWeather() {
+            try {
+                const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=41.6561&longitude=-0.8773&current_weather=true');
+                const data = await response.json();
+                if (data && data.current_weather) {
+                    const code = data.current_weather.weathercode;
+                    const wind = data.current_weather.windspeed;
+
+                    if (wind > 25) {
+                        zaragozaWeatherReal = 'Viento / Cierzo';
+                    } else if (code === 0) {
+                        zaragozaWeatherReal = 'Soleado';
+                    } else if (code === 1 || code === 2) {
+                        zaragozaWeatherReal = 'Sol y Nubes';
+                    } else if (code === 3) {
+                        zaragozaWeatherReal = 'Nublado';
+                    } else if (code >= 51 && code <= 67) {
+                        zaragozaWeatherReal = 'Lluvia';
+                    } else {
+                        zaragozaWeatherReal = 'Sol y Nubes';
+                    }
+                }
+            } catch (e) {
+                zaragozaWeatherReal = 'Soleado';
+            }
+        }
+
+        function selectWeather(weatherChoice) {
+            if (weatherChoice === zaragozaWeatherReal || 
+               (weatherChoice === 'Soleado' && zaragozaWeatherReal === 'Sol y Nubes') ||
+               (weatherChoice === 'Sol y Nubes' && zaragozaWeatherReal === 'Soleado')) {
+                showFeedback(true, "¡Excelente Trabajo!", "¡Has completado correctamente todas las actividades diarias de 'El parte'!", () => {
+                    showScreen('screen-home');
+                    speakText("¡Enhorabuena! Has terminado todas las actividades de hoy.");
+                });
+            } else {
+                showFeedback(false, "Casi, inténtalo de nuevo", `El tiempo observado en Zaragoza corresponde a: ${zaragozaWeatherReal}.`);
+            }
+        }
+
+        function setupKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key >= '0' && e.key <= '9') {
+                    if (document.getElementById('screen-challenge-1').classList.contains('active')) {
+                        pressNumberKey(parseInt(e.key, 10));
+                    }
+                } else if (e.key === 'Backspace') {
+                    if (document.getElementById('screen-challenge-1').classList.contains('active')) {
+                        clearSelectedSlot();
+                    }
+                } else if (e.key === 'Enter') {
+                    const modal = document.getElementById('feedback-modal');
+                    if (modal.classList.contains('active')) {
+                        closeModal();
+                    }
+                }
+            });
         }
     </script>
 </body>
