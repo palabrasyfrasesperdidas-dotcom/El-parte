@@ -276,7 +276,6 @@
             line-height: 30px;
         }
 
-        /* Posicionamiento números del reloj */
         .num-12 { top: 8px; left: calc(50% - 15px); }
         .num-1  { top: 22px; right: 45px; }
         .num-2  { top: 55px; right: 18px; }
@@ -348,7 +347,6 @@
             max-width: 900px;
         }
 
-        /* Fichas Cuadradas Blancas con Texto/Número Rojo */
         .tile-card {
             width: clamp(55px, 10vw, 75px);
             height: clamp(65px, 11vw, 85px);
@@ -377,7 +375,6 @@
             box-shadow: 0 3px 0 #801010, 0 4px 6px rgba(0,0,0,0.4);
         }
 
-        /* Tarjetas de Estaciones y Clima */
         .tile-image-card {
             width: clamp(130px, 22vw, 190px);
             height: clamp(130px, 22vw, 190px);
@@ -414,7 +411,6 @@
             margin-top: 4px;
         }
 
-        /* Botones de Acción */
         .action-bar {
             display: flex;
             gap: 15px;
@@ -521,14 +517,14 @@
             <p class="subtitle">¡Bienvenido/a al tablero de actividades diarias!</p>
             
             <div class="hero-banner">
-                <img src="https://images.unsplash.com/photo-1581579438747-1dc8d1e292c7?auto=format&fit=crop&w=800&q=80" 
-                     alt="Personas mayores felices realizando actividades" 
+                <img src="https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80" 
+                     alt="Actividades cognitivas y educativas" 
                      class="hero-img"
-                     onerror="this.src='https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80'">
+                     onerror="this.src='https://images.unsplash.com/photo-1581579438747-1dc8d1e292c7?auto=format&fit=crop&w=800&q=80'">
                 <div class="motto-text">"Todos los días aprendemos"</div>
             </div>
 
-            <button class="btn-start" onclick="startApp()">Comenzar las actividades</button>
+            <button class="btn-start" onclick="startApp()">Comenzar actividad</button>
         </div>
 
         <!-- PANTALLA RETO 1: LA FECHA -->
@@ -625,7 +621,7 @@
             </div>
 
             <div class="bottom-bank">
-                <span class="bank-instruction" id="clock-bank-title">Selecciona la HORA (1 a 12):</span>
+                <span class="bank-instruction" id="clock-bank-title">Selecciona la HORA (1 al 12):</span>
                 <div class="tiles-grid" id="clock-options-bank"></div>
             </div>
         </div>
