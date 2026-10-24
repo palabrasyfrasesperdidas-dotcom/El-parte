@@ -379,7 +379,7 @@
         }
 
         .task-icon {
-            font-size: 4rem;
+            font-size: 4.5rem;
         }
 
         /* BANCO DE OPCIONES INFERIORES */
@@ -690,7 +690,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA (PICTOGRAMAS VECTORIALES SVG ULTRA-PRECISOS) -->
+        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA -->
         <div id="screen-challenge-5" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">5. ¿Qué ropa elegimos para hoy?</div>
@@ -715,7 +715,6 @@
                 <span class="bank-instruction">Toca los pictogramas de la ropa adecuada para el tiempo:</span>
                 <div class="clothes-grid">
                     
-                    <!-- Pantalones -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Pantalones')">
                         <svg viewBox="0 0 64 64" fill="#1565C0">
                             <path d="M18 6h28l4 52h-13l-5-28-5 28H14L18 6z" stroke="#0D47A1" stroke-width="3" stroke-linejoin="round"/>
@@ -723,7 +722,6 @@
                         <span>Pantalones</span>
                     </button>
 
-                    <!-- Falda -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Falda')">
                         <svg viewBox="0 0 64 64" fill="#E91E63">
                             <path d="M22 12h20l12 38H10L22 12z" stroke="#C2185B" stroke-width="3" stroke-linejoin="round"/>
@@ -731,7 +729,6 @@
                         <span>Falda</span>
                     </button>
 
-                    <!-- Manga Corta -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Manga Corta')">
                         <svg viewBox="0 0 64 64" fill="#4CAF50">
                             <path d="M20 10l-12 8 6 12 6-4v28h24V26l6 4 6-12-12-8h-24z" stroke="#2E7D32" stroke-width="3" stroke-linejoin="round"/>
@@ -739,7 +736,6 @@
                         <span>Manga Corta</span>
                     </button>
 
-                    <!-- Manga Larga -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Manga Larga')">
                         <svg viewBox="0 0 64 64" fill="#FF9800">
                             <path d="M20 10L6 32l8 5 6-11v28h24V26l6 11 8-5L44 10H20z" stroke="#E65100" stroke-width="3" stroke-linejoin="round"/>
@@ -747,7 +743,6 @@
                         <span>Manga Larga</span>
                     </button>
 
-                    <!-- Jersey -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Jersey')">
                         <svg viewBox="0 0 64 64" fill="#9C27B0">
                             <path d="M18 10L6 30l8 5 6-9v28h24V26l6 9 8-5L46 10H18z" stroke="#4A148C" stroke-width="3" stroke-linejoin="round"/>
@@ -756,7 +751,6 @@
                         <span>Jersey</span>
                     </button>
 
-                    <!-- Chaqueta -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Chaqueta')">
                         <svg viewBox="0 0 64 64" fill="#795548">
                             <path d="M18 10L6 30l8 5 6-9v28h24V26l6 9 8-5L46 10H18z" stroke="#3E2723" stroke-width="3" stroke-linejoin="round"/>
@@ -765,7 +759,6 @@
                         <span>Chaqueta</span>
                     </button>
 
-                    <!-- Abrigo -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Abrigo')">
                         <svg viewBox="0 0 64 64" fill="#37474F">
                             <path d="M18 8L6 30l8 5 6-9v34h24V26l6 9 8-5L46 8H18z" stroke="#263238" stroke-width="3" stroke-linejoin="round"/>
@@ -790,7 +783,7 @@
 
             <div class="workspace">
                 <div class="task-card-display">
-                    <div id="task-icon" class="task-icon">🪟</div>
+                    <div id="task-icon" class="task-icon">🛏️</div>
                     <div id="task-title" class="task-title">Hacer la cama</div>
                 </div>
             </div>
@@ -838,16 +831,17 @@
         let nextStepCallback = null;
         let dressedItems = new Set();
 
+        /* Corrección de emojis universales para evitar rectángulos vacíos */
         const homeTasks = [
             { name: "Hacer la cama", icon: "🛏️", room: "Dormitorio" },
             { name: "Lavar los platos", icon: "🍽️", room: "Cocina" },
             { name: "Ducharse o lavarse la cara", icon: "🚿", room: "Baño" },
-            { name: "Barrer o pasar la fregona", icon: "🧹", room: "Salón" },
+            { name: "Barrer o pasar la fregona", icon: "✨", room: "Salón" },
             { name: "Guardar la ropa en el armario", icon: "👔", room: "Dormitorio" },
             { name: "Cocinar la comida", icon: "🍳", room: "Cocina" },
-            { name: "Limpiar el espejo", icon: "🪞", room: "Baño" },
+            { name: "Limpiar el espejo", icon: "🪟", room: "Baño" },
             { name: "Ver la televisión en el sofá", icon: "📺", room: "Salón" },
-            { name: "Poner la lavadora", icon: "🧺", room: "Cocina" },
+            { name: "Poner la lavadora", icon: "🫧", room: "Cocina" },
             { name: "Tirar la basura", icon: "🗑️", room: "Cocina" }
         ];
         let currentTaskIndex = 0;
