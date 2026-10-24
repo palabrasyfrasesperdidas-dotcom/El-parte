@@ -96,7 +96,6 @@
             align-items: center;
         }
 
-        /* Foto B/N con mirada de alto contraste */
         .hero-img {
             width: 100%;
             max-height: 270px;
@@ -341,20 +340,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 6px;
+            padding: 8px 4px;
             cursor: pointer;
             box-shadow: 0 4px 0 #801010;
         }
 
-        .tile-clothes-card img {
+        .tile-clothes-card svg {
             width: 100%;
-            height: 65%;
-            object-fit: contain;
+            height: 60%;
         }
 
         .tile-clothes-card span {
             color: #111;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: bold;
             text-align: center;
         }
@@ -519,7 +517,6 @@
             <p class="subtitle">¡Bienvenido/a al tablero de actividades diarias!</p>
             
             <div class="hero-banner">
-                <!-- Foto B/N de niño con mirada expresiva -->
                 <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80" 
                      alt="Retrato de niño en blanco y negro con mirada expresiva" 
                      class="hero-img"
@@ -693,7 +690,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA -->
+        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA (PICTOGRAMAS VECTORIALES SVG ULTRA-PRECISOS) -->
         <div id="screen-challenge-5" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">5. ¿Qué ropa elegimos para hoy?</div>
@@ -717,34 +714,69 @@
             <div class="bottom-bank">
                 <span class="bank-instruction">Toca los pictogramas de la ropa adecuada para el tiempo:</span>
                 <div class="clothes-grid">
+                    
+                    <!-- Pantalones -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Pantalones')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/5995/5995537.png" alt="Pantalones">
+                        <svg viewBox="0 0 64 64" fill="#1565C0">
+                            <path d="M18 6h28l4 52h-13l-5-28-5 28H14L18 6z" stroke="#0D47A1" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>
                         <span>Pantalones</span>
                     </button>
+
+                    <!-- Falda -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Falda')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2907/2907233.png" alt="Falda">
+                        <svg viewBox="0 0 64 64" fill="#E91E63">
+                            <path d="M22 12h20l12 38H10L22 12z" stroke="#C2185B" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>
                         <span>Falda</span>
                     </button>
+
+                    <!-- Manga Corta -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Manga Corta')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2503/2503508.png" alt="Manga Corta">
+                        <svg viewBox="0 0 64 64" fill="#4CAF50">
+                            <path d="M20 10l-12 8 6 12 6-4v28h24V26l6 4 6-12-12-8h-24z" stroke="#2E7D32" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>
                         <span>Manga Corta</span>
                     </button>
+
+                    <!-- Manga Larga -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Manga Larga')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2503/2503522.png" alt="Manga Larga">
+                        <svg viewBox="0 0 64 64" fill="#FF9800">
+                            <path d="M20 10L6 32l8 5 6-11v28h24V26l6 11 8-5L44 10H20z" stroke="#E65100" stroke-width="3" stroke-linejoin="round"/>
+                        </svg>
                         <span>Manga Larga</span>
                     </button>
+
+                    <!-- Jersey -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Jersey')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png" alt="Jersey">
+                        <svg viewBox="0 0 64 64" fill="#9C27B0">
+                            <path d="M18 10L6 30l8 5 6-9v28h24V26l6 9 8-5L46 10H18z" stroke="#4A148C" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M24 10a8 8 0 0 0 16 0" fill="none" stroke="#4A148C" stroke-width="3"/>
+                        </svg>
                         <span>Jersey</span>
                     </button>
+
+                    <!-- Chaqueta -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Chaqueta')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/892/892455.png" alt="Chaqueta">
+                        <svg viewBox="0 0 64 64" fill="#795548">
+                            <path d="M18 10L6 30l8 5 6-9v28h24V26l6 9 8-5L46 10H18z" stroke="#3E2723" stroke-width="3" stroke-linejoin="round"/>
+                            <line x1="32" y1="10" x2="32" y2="54" stroke="#FFF" stroke-width="3"/>
+                        </svg>
                         <span>Chaqueta</span>
                     </button>
+
+                    <!-- Abrigo -->
                     <button class="tile-clothes-card" onclick="toggleClothing('Abrigo')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3241/3241951.png" alt="Abrigo">
+                        <svg viewBox="0 0 64 64" fill="#37474F">
+                            <path d="M18 8L6 30l8 5 6-9v34h24V26l6 9 8-5L46 8H18z" stroke="#263238" stroke-width="3" stroke-linejoin="round"/>
+                            <line x1="32" y1="8" x2="32" y2="60" stroke="#FFF" stroke-width="3"/>
+                            <circle cx="28" cy="24" r="2" fill="#FFF"/>
+                            <circle cx="28" cy="36" r="2" fill="#FFF"/>
+                            <circle cx="28" cy="48" r="2" fill="#FFF"/>
+                        </svg>
                         <span>Abrigo</span>
                     </button>
+
                 </div>
             </div>
         </div>
