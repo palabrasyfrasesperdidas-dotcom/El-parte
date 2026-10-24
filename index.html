@@ -517,9 +517,11 @@
             <p class="subtitle">¡Bienvenido/a al tablero de actividades diarias!</p>
             
             <div class="hero-banner">
-                <img src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80" 
-                     alt="Niña feliz sonriendo" 
-                     class="hero-img">
+                <!-- Cambio 1: Foto inspiradora de Pinterest -->
+                <img src="https://i.pinimg.com/736x/8f/3e/2d/8f3e2d53ea7db4b94c4832dbfa9233be.jpg" 
+                     alt="Actividades y estimulación cognitiva" 
+                     class="hero-img"
+                     onerror="this.src='https://images.unsplash.com/photo-1516307365426-bea591f05011?auto=format&fit=crop&w=800&q=80'">
                 <div class="motto-text">"Todos los días aprendemos"</div>
             </div>
 
@@ -625,7 +627,7 @@
             </div>
         </div>
 
-        <!-- PANTALLA RETO 3: LA ESTACIÓN DEL AÑO -->
+        <!-- PANTALLA RETO 3: LA ESTACIÓN DEL AÑO (PICTOGRAMAS ESTILO PETICIÓN) -->
         <div id="screen-challenge-3" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">3. ¿En qué estación del año estamos?</div>
@@ -633,29 +635,29 @@
             </div>
 
             <div class="workspace">
-                <p class="bank-instruction" style="margin-bottom: 20px;">Toca o selecciona la imagen correcta de la estación actual:</p>
+                <p class="bank-instruction" style="margin-bottom: 20px;">Toca o selecciona el pictograma correcto de la estación actual:</p>
                 <div class="tiles-grid" style="gap: 20px;">
-                    <button class="tile-image-card" onclick="selectSeason('Primavera')">
-                        <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=400&q=80" alt="Primavera">
-                        <span>Primavera</span>
+                    <button class="tile-image-card" onclick="selectSeason('Primavera')" style="background-color: #2e7d32;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3626/3626759.png" alt="Primavera" style="background: white; padding: 10px; border-radius: 8px;">
+                        <span style="color: white;">Primavera</span>
                     </button>
-                    <button class="tile-image-card" onclick="selectSeason('Verano')">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Verano">
-                        <span>Verano</span>
+                    <button class="tile-image-card" onclick="selectSeason('Verano')" style="background-color: #fbc02d;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Verano" style="background: white; padding: 10px; border-radius: 8px;">
+                        <span style="color: #222;">Verano</span>
                     </button>
-                    <button class="tile-image-card" onclick="selectSeason('Otoño')">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80" alt="Otoño (Hojas secas)" onerror="this.src='https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=400&q=80'">
-                        <span>Otoño</span>
+                    <button class="tile-image-card" onclick="selectSeason('Otoño')" style="background-color: #ef6c00;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/4818/4818610.png" alt="Otoño" style="background: white; padding: 10px; border-radius: 8px;">
+                        <span style="color: white;">Otoño</span>
                     </button>
-                    <button class="tile-image-card" onclick="selectSeason('Invierno')">
-                        <img src="https://images.unsplash.com/photo-1483664852095-d6cc6870702d?auto=format&fit=crop&w=400&q=80" alt="Invierno">
-                        <span>Invierno</span>
+                    <button class="tile-image-card" onclick="selectSeason('Invierno')" style="background-color: #0288d1;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/642/642102.png" alt="Invierno" style="background: white; padding: 10px; border-radius: 8px;">
+                        <span style="color: white;">Invierno</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA RETO 4: EL CLIMA EN ZARAGOZA -->
+        <!-- PANTALLA RETO 4: EL CLIMA EN ZARAGOZA (PICTOGRAMAS CLAROS) -->
         <div id="screen-challenge-4" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">4. ¿Qué tiempo hace hoy en Zaragoza?</div>
@@ -663,33 +665,33 @@
             </div>
 
             <div class="workspace">
-                <p class="bank-instruction" style="margin-bottom: 15px;">Observa el tiempo fuera y selecciona la opción correcta:</p>
+                <p class="bank-instruction" style="margin-bottom: 15px;">Observa el tiempo fuera y selecciona el pictograma correcto:</p>
                 <div class="tiles-grid" style="gap: 15px;">
                     <button class="tile-image-card" onclick="selectWeather('Soleado')">
-                        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Soleado">
+                        <img src="https://cdn-icons-png.flaticon.com/512/869/869869.png" alt="Soleado">
                         <span>Soleado</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Sol y Nubes')">
-                        <img src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=400&q=80" alt="Sol y Nubes">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1163/1163624.png" alt="Sol y Nubes">
                         <span>Sol y Nubes</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Nublado')">
-                        <img src="https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?auto=format&fit=crop&w=400&q=80" alt="Nublado">
+                        <img src="https://cdn-icons-png.flaticon.com/512/414/414927.png" alt="Nublado">
                         <span>Nublado</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Lluvia')">
-                        <img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=400&q=80" alt="Lluvia">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3351/3351979.png" alt="Lluvia">
                         <span>Lluvia</span>
                     </button>
                     <button class="tile-image-card" onclick="selectWeather('Viento / Cierzo')">
-                        <img src="https://images.unsplash.com/photo-1499346030926-9a72daac6c63?auto=format&fit=crop&w=400&q=80" alt="Viento">
+                        <img src="https://cdn-icons-png.flaticon.com/512/959/959711.png" alt="Viento">
                         <span>Viento / Cierzo</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA -->
+        <!-- PANTALLA RETO 5: VESTIR A LA ANCIANA (PICTOGRAMAS CORRECTOS DE ROPA) -->
         <div id="screen-challenge-5" class="screen">
             <div class="challenge-header">
                 <div class="challenge-title">5. ¿Qué ropa elegimos para hoy?</div>
@@ -711,14 +713,14 @@
             </div>
 
             <div class="bottom-bank">
-                <span class="bank-instruction">Toca la ropa que debe ponerse en función del tiempo:</span>
+                <span class="bank-instruction">Toca los pictogramas de la ropa adecuada para el tiempo:</span>
                 <div class="clothes-grid">
                     <button class="tile-clothes-card" onclick="toggleClothing('Pantalones')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2290/2290514.png" alt="Pantalones">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5995/5995537.png" alt="Pantalones">
                         <span>Pantalones</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Falda')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1785/1785255.png" alt="Falda">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2907/2907233.png" alt="Falda">
                         <span>Falda</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Manga Corta')">
@@ -730,15 +732,15 @@
                         <span>Manga Larga</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Jersey')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/3050/3050239.png" alt="Jersey">
+                        <img src="https://cdn-icons-png.flaticon.com/512/892/892458.png" alt="Jersey">
                         <span>Jersey</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Chaqueta')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2806/2806214.png" alt="Chaqueta">
+                        <img src="https://cdn-icons-png.flaticon.com/512/892/892455.png" alt="Chaqueta">
                         <span>Chaqueta</span>
                     </button>
                     <button class="tile-clothes-card" onclick="toggleClothing('Abrigo')">
-                        <img src="https://cdn-icons-png.flaticon.com/512/2806/2806225.png" alt="Abrigo">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3241/3241951.png" alt="Abrigo">
                         <span>Abrigo</span>
                     </button>
                 </div>
@@ -811,7 +813,7 @@
             { name: "Cocinar la comida", icon: "🍳", room: "Cocina" },
             { name: "Limpiar el espejo", icon: "🪞", room: "Baño" },
             { name: "Ver la televisión en el sofá", icon: "📺", room: "Salón" },
-            { name: "Poner la lavadora", icon: "🧺", room: "Baño" },
+            { name: "Poner la lavadora", icon: "🧺", room: "Cocina" }, /* Cambio 5: Lavadora en Cocina */
             { name: "Tirar la basura", icon: "🗑️", room: "Cocina" }
         ];
         let currentTaskIndex = 0;
@@ -1088,7 +1090,7 @@
                     speakText("Reto cuatro: Selecciona el clima de hoy en Zaragoza.");
                 });
             } else {
-                showFeedback(false, "Casi, inténtalo de nuevo", `Actualmente estamos en ${realSeason}. Toca la imagen correspondiente.`);
+                showFeedback(false, "Casi, inténtalo de nuevo", `Actualmente estamos en ${realSeason}. Toca el pictograma correspondiente.`);
             }
         }
 
